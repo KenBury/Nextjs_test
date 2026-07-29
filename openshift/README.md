@@ -1,20 +1,71 @@
 # OpenShift Local (CRC) Pure S2I Deployment Guide
 
-This guide walks you through deploying your **Next.js** application to **OpenShift Local** using **Pure Source-to-Image (S2I)**—no `Dockerfile` or local container builds required!
+This guide walks you through starting your **OpenShift Local** environment and deploying your **Next.js** application using **Pure Source-to-Image (S2I)**—no `Dockerfile` or local container builds required!
 
 ---
 
-## 📋 Prerequisites
+## 🖥️ How to Start OpenShift Local (CRC)
 
-1. **OpenShift Local (CRC)** running on your system (`crc start`).
-2. **OpenShift CLI (`oc`)** installed and in your system PATH.
-3. Your `Nextjs_test` code pushed to an accessible Git repository (e.g. GitHub or GitLab).
+### Step 1: Run Pre-Flight Environment Setup
+Run `crc setup` to configure virtualization (Hyper-V / Podman / networking):
+
+```powershell
+crc setup
+```
 
 ---
 
-## 🚀 Step-by-Step Deployment Instructions
+### Step 2: Start the OpenShift Local Cluster
+Start the local single-node cluster:
 
-### Step 1: Log in to OpenShift Local
+```powershell
+crc start
+```
+
+> **First-Time Launch Note:**  
+> On your first launch, CRC will ask for a **Red Hat Pull Secret**. Download your free pull secret from [Red Hat Hybrid Cloud Console](https://console.redhat.com/openshift/create/local) and pass it via:
+> ```powershell
+> crc start -p "C:\path\to\pull-secret.txt"
+> ```
+
+---
+
+### Step 3: Add `oc` CLI to Your Terminal Environment
+
+In **PowerShell**:
+```powershell
+crc oc-env | Invoke-Expression
+```
+
+In **Git Bash / WSL / Linux**:
+```bash
+eval $(crc oc-env)
+```
+
+---
+
+### Step 4: Verify Cluster Status & Retrieve Credentials
+
+Check cluster state:
+```powershell
+crc status
+```
+
+Print login passwords for `developer` and `kubeadmin`:
+```powershell
+crc console --credentials
+```
+
+Open the OpenShift Web Console in your browser:
+```powershell
+crc console
+```
+
+---
+
+## 🚀 Step-by-Step Deployment Instructions (Pure S2I)
+
+### Step 1: Log in to OpenShift Local CLI
 
 ```bash
 oc login -u developer -p developer https://api.crc.testing:6443
@@ -68,19 +119,13 @@ oc expose svc/nextjs-test
 oc get route nextjs-test
 ```
 
-Your app will be accessible at:
+Your app will be accessible at:  
 `http://nextjs-test-nextjs-test.apps-crc.testing`
 
 ---
 
-## 🔄 Automatic Redeployments on `git push`
+## 🛑 Stopping & Managing OpenShift Local
 
-To trigger an automatic build every time you push code to Git:
-
-```bash
-# Get the OpenShift Webhook URL
-oc describe bc/nextjs-test | grep -A 2 "Webhook GitHub"
-
-# Trigger a manual rebuild anytime without Git:
-oc start-build bc/nextjs-test --follow
-```
+- **Check Status**: `crc status`
+- **Stop Cluster**: `crc stop`
+- **Delete Local VM**: `crc delete`
