@@ -18,8 +18,8 @@ OpenShift Local (CRC) is **100% free for developers**, but Red Hat requires your
 2. **Download the File**: Scroll to the download section for Windows and click **"Download Pull Secret"**. This saves a file named `pull-secret` (or `pull-secret.txt`) to your `Downloads` folder.
 3. **Start CRC with your Pull Secret**:
    ```powershell
-   crc start -p "C:\Users\<YOUR_USERNAME>\Downloads\pull-secret.txt"
-   ```
+   crc start -p "C:\Users\kenbu\Downloads\pull-secret.txt"
+```
    *Alternative:* If you run `crc start` without `-p`, CRC will prompt you in the terminal: `Please enter the pull secret:`. You can copy and paste the contents of your text file directly into the terminal prompt.
 4. **Automatic Saved Credentials**:  
    You only need to provide the pull secret **once**! CRC permanently saves it to `~/.crc/pull-secret.json`. On subsequent `crc start` commands, you won't need to specify `-p` ever again.
@@ -41,7 +41,7 @@ crc setup
 Start the local single-node cluster:
 
 ```powershell
-crc start -p "C:\path\to\pull-secret.txt"
+crc start -p "C:\Users\kenbu\Downloads\pull-secret.txt"
 ```
 
 ---
@@ -141,13 +141,11 @@ oc new-project nextjs-test
 
 ### Step 3: Create App Using Pure Node.js S2I
 
-Run `oc new-app` pointing to the official Red Hat Node.js 20 S2I image and your Git repository URL:
+Run `oc new-app` pointing to the official Red Hat Node.js 20 S2I image and your GitHub repository URL:
 
 ```bash
-oc new-app nodejs:20~https://github.com/<YOUR_GITHUB_USERNAME>/Nextjs_test.git --name=nextjs-test
+oc new-app nodejs:20~https://github.com/KenBury/Nextjs_test.git --name=nextjs-test
 ```
-
-> **Note:** Replace `<YOUR_GITHUB_USERNAME>` with your actual GitHub username.
 
 ---
 
