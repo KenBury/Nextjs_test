@@ -154,6 +154,8 @@ oc new-app nodejs:20-ubi9~https://github.com/KenBury/Nextjs_test.git --name=next
 OpenShift will launch a build pod inside the cluster to clone your Git repo, run `npm install`, and execute `npm run build`:
 
 ```bash
+oc set build-secret bc/nextjs-test github-secret --source
+
 oc logs -f bc/nextjs-test
 ```
 
