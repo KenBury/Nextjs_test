@@ -125,7 +125,7 @@ When accessing `https://console-openshift-console.apps-crc.testing`:
 
 ### Step 1: Log in to OpenShift Local CLI
 
-```bash
+```powershell
 oc login -u developer -p developer https://api.crc.testing:6443
 ```
 
@@ -133,39 +133,45 @@ oc login -u developer -p developer https://api.crc.testing:6443
 
 ### Step 2: Create a New OpenShift Project
 
-```bash
+```powershell
 oc new-project nextjs-test
 ```
 
 ---
 
-### Step 3: Create App Using Pure Node.js S2I
+### Option A: Build Directly from Your Local Folder (No GitHub Token Needed! 🚀)
 
-Run `oc new-app` pointing to the official Red Hat Node.js 20 S2I image and your GitHub repository URL:
+```powershell
+# 1. Delete previous build config if present
+oc delete all -l app=nextjs-test
 
-```bash
-oc new-app nodejs:20-ubi9~https://github.com/KenBury/Nextjs_test.git --name=nextjs-test
+# 2. Create app definition for local directory streaming
+oc new-app nodejs:20-ubi9 --name=nextjs-test
+
+# 3. Stream your local folder directly into OpenShift and build!
+oc start-build nextjs-test --from-dir=. --follow
+
+# 4. Expose the OpenShift route
+oc expose svc/nextjs-test
 ```
 
 ---
 
-### Step 4: Track the In-Cluster S2I Build
+### Option B: Build from Private GitHub Repository
 
-OpenShift will launch a build pod inside the cluster to clone your Git repo, run `npm install`, and execute `npm run build`:
+```powershell
+# 1. Create GitHub secret with your PAT token
+oc create secret generic github-secret --from-literal=username=KenBury --from-literal=password=<YOUR_GITHUB_PAT_TOKEN> --type=kubernetes.io/basic-auth
 
-```bash
+# 2. Link secret to OpenShift builder
+oc secret link builder github-secret
 oc set build-secret bc/nextjs-test github-secret --source
 
-oc logs -f bc/nextjs-test
-```
+# 3. Create app and start build
+oc new-app nodejs:20-ubi9~https://github.com/KenBury/Nextjs_test.git --name=nextjs-test
+oc start-build bc/nextjs-test --follow
 
----
-
-### Step 5: Expose the OpenShift Route (Public Access URL)
-
-Once the build completes and pods are running, expose the service via the OpenShift router:
-
-```bash
+# 4. Expose the route
 oc expose svc/nextjs-test
 ```
 
@@ -173,7 +179,7 @@ oc expose svc/nextjs-test
 
 ### Step 6: Get Your Live Application URL
 
-```bash
+```powershell
 oc get route nextjs-test
 ```
 
