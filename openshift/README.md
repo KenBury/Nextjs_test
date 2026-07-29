@@ -144,7 +144,7 @@ oc new-project nextjs-test
 Run `oc new-app` pointing to the official Red Hat Node.js 20 S2I image and your GitHub repository URL:
 
 ```bash
-oc new-app nodejs:20~https://github.com/KenBury/Nextjs_test.git --name=nextjs-test
+oc new-app nodejs:20-ubi9~https://github.com/KenBury/Nextjs_test.git --name=nextjs-test
 ```
 
 ---
