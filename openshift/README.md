@@ -174,8 +174,13 @@ oc start-build bc/nextjs-test --follow
 # 2. Patch OpenShift Service target port to Next.js port 3000
 oc patch svc/nextjs-test --type=json -p='[{"op": "replace", "path": "/spec/ports/0/targetPort", "value": 3000}]'
 
-# 3. Expose the route
-oc expose svc/nextjs-test
+# 3. Expose the route with HTTPS TLS Edge Termination
+oc create route edge nextjs-test --service=nextjs-test
+# Or patch existing route:
+# oc patch route nextjs-test --type=json -p='[{"op": "add", "path": "/spec/tls", "value": {"termination": "edge"}}]'
+
+# 4. Access your HTTPS URL
+# https://nextjs-test-nextjs-test.apps-crc.testing
 ```
 
 ---
