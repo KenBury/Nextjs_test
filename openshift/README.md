@@ -4,6 +4,28 @@ This guide walks you through starting your **OpenShift Local** environment and d
 
 ---
 
+## 🔑 Understanding the Red Hat Pull Secret
+
+### What is a Pull Secret?
+A **Pull Secret** is an encrypted JSON file containing authentication tokens provided by Red Hat. 
+
+### Why is it Required?
+OpenShift Local (CRC) is **100% free for developers**, but Red Hat requires your cluster to authenticate when downloading official enterprise container base images (such as Red Hat Enterprise Linux UBI, Red Hat Node.js S2I images, CoreOS base layers, and OpenShift router images) from Red Hat's container registries (`registry.redhat.io` and `quay.io`).
+
+### How to Get and Use Your Pull Secret (4 Quick Steps)
+
+1. **Sign in to Red Hat**: Visit [Red Hat Hybrid Cloud Console - OpenShift Local](https://console.redhat.com/openshift/create/local) and log in (or create a free Red Hat Developer account).
+2. **Download the File**: Scroll to the download section for Windows and click **"Download Pull Secret"**. This saves a file named `pull-secret` (or `pull-secret.txt`) to your `Downloads` folder.
+3. **Start CRC with your Pull Secret**:
+   ```powershell
+   crc start -p "C:\Users\<YOUR_USERNAME>\Downloads\pull-secret.txt"
+   ```
+   *Alternative:* If you run `crc start` without `-p`, CRC will prompt you in the terminal: `Please enter the pull secret:`. You can copy and paste the contents of your text file directly into the terminal prompt.
+4. **Automatic Saved Credentials**:  
+   You only need to provide the pull secret **once**! CRC permanently saves it to `~/.crc/pull-secret.json`. On subsequent `crc start` commands, you won't need to specify `-p` ever again.
+
+---
+
 ## 🖥️ How to Start OpenShift Local (CRC)
 
 ### Step 1: Run Pre-Flight Environment Setup
@@ -19,14 +41,8 @@ crc setup
 Start the local single-node cluster:
 
 ```powershell
-crc start
+crc start -p "C:\path\to\pull-secret.txt"
 ```
-
-> **First-Time Launch Note:**  
-> On your first launch, CRC will ask for a **Red Hat Pull Secret**. Download your free pull secret from [Red Hat Hybrid Cloud Console](https://console.redhat.com/openshift/create/local) and pass it via:
-> ```powershell
-> crc start -p "C:\path\to\pull-secret.txt"
-> ```
 
 ---
 
