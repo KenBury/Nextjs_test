@@ -79,6 +79,48 @@ crc console
 
 ---
 
+## 🔧 Troubleshooting & Windows Network Setup
+
+### 1. Fixing Full Disk & Stuck `OpenShift: Starting` State
+If `crc status` shows `Disk Usage: 32.68GB of 32.68GB` (100% full), OpenShift operators will fail to start.
+
+Expand the VM disk to 50 GB:
+```powershell
+# Stop cluster VM
+crc stop
+
+# Increase VM disk size configuration to 50GB
+crc config set disk-size 50
+
+# Restart cluster
+crc start
+```
+
+---
+
+### 2. Windows `hosts` File Setup (`127.0.0.1` User-Mode Networking)
+If `crc ip` returns `127.0.0.1` and your browser shows *"This site can't be reached"*, Windows needs to map `.testing` hostnames to `127.0.0.1`.
+
+Open **PowerShell as Administrator** and execute:
+```powershell
+Add-Content -Path "C:\Windows\System32\drivers\etc\hosts" -Value "`n127.0.0.1 console-openshift-console.apps-crc.testing oauth-openshift.apps-crc.testing api.crc.testing default-route-openshift-image-registry.apps-crc.testing nextjs-test-nextjs-test.apps-crc.testing"
+```
+
+Flush DNS cache:
+```powershell
+ipconfig /flushdns
+crc console
+```
+
+---
+
+### 3. Browser TLS Certificate Warning
+When accessing `https://console-openshift-console.apps-crc.testing`:
+- Chrome / Edge will display a self-signed SSL warning (*"Your connection is not private"* / `NET::ERR_CERT_AUTHORITY_INVALID`).
+- Click **Advanced** -> Click **"Proceed to console-openshift-console.apps-crc.testing (unsafe)"**.
+
+---
+
 ## 🚀 Step-by-Step Deployment Instructions (Pure S2I)
 
 ### Step 1: Log in to OpenShift Local CLI
