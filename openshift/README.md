@@ -167,11 +167,14 @@ oc create secret generic github-secret --from-literal=username=KenBury --from-li
 oc secret link builder github-secret
 oc set build-secret bc/nextjs-test github-secret --source
 
-# 3. Create app and start build
+# 1. Create app and start build
 oc new-app nodejs:20-ubi9~https://github.com/KenBury/Nextjs_test.git --name=nextjs-test
 oc start-build bc/nextjs-test --follow
 
-# 4. Expose the route
+# 2. Patch OpenShift Service target port to Next.js port 3000
+oc patch svc/nextjs-test --type=json -p='[{"op": "replace", "path": "/spec/ports/0/targetPort", "value": 3000}]'
+
+# 3. Expose the route
 oc expose svc/nextjs-test
 ```
 
