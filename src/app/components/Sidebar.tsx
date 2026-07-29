@@ -10,6 +10,7 @@ interface SidebarProps {
 export default function Sidebar({ activeTab, setActiveTab }: SidebarProps) {
   const navItems = [
     { id: "overview", label: "Dashboard Overview", icon: "📊" },
+    { id: "mssql", label: "MSSQL OpenShift Secret", icon: "🗄️" },
     { id: "telemetry", label: "Live Telemetry", icon: "⚡" },
     { id: "polar", label: "Polar Model Inspector", icon: "🎯" },
     { id: "selectors", label: "Trained Selectors", icon: "🎛️" },

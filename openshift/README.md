@@ -196,6 +196,25 @@ Your app will be accessible at:
 
 ---
 
+## 🔐 Injecting MSSQL Server Secrets into OpenShift
+
+To test injecting MSSQL credentials from OpenShift Secrets into your Next.js application pods:
+
+```powershell
+# 1. Create the OpenShift secret
+oc create secret generic mssql-secret `
+  --from-literal=MSSQL_HOST=mssql.production.svc.cluster.local `
+  --from-literal=MSSQL_PORT=1433 `
+  --from-literal=MSSQL_DATABASE=PrecisionAnalyticsDB `
+  --from-literal=MSSQL_USER=sa_analytics_admin `
+  --from-literal=MSSQL_PASSWORD=P@ssw0rd!Precision2026
+
+# 2. Inject secret environment variables into the Next.js deployment
+oc set env deployment/nextjs-test --from=secret/mssql-secret
+```
+
+---
+
 ## 🛑 Stopping & Managing OpenShift Local
 
 - **Check Status**: `crc status`

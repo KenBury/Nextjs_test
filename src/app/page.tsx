@@ -6,6 +6,7 @@ import Header from "./components/Header";
 import KpiGrid from "./components/KpiGrid";
 import PolarChartCard from "./components/PolarChartCard";
 import TelemetryTable from "./components/TelemetryTable";
+import MssqlSecretCard from "./components/MssqlSecretCard";
 
 export default function Home() {
   const [activeTab, setActiveTab] = useState("overview");
@@ -45,7 +46,7 @@ export default function Home() {
                 Precision Analytics Control Center
               </h1>
               <p style={{ fontSize: "14px", color: "var(--text-secondary)", marginTop: "4px" }}>
-                Real-time performance telemetry, FastAPI worker metrics, and polar model scale evaluation.
+                Real-time performance telemetry, FastAPI worker metrics, and OpenShift Secret Inspector.
               </p>
             </div>
 
@@ -91,10 +92,13 @@ export default function Home() {
           {/* Tab Views */}
           {activeTab === "overview" && (
             <>
+              <MssqlSecretCard />
               <PolarChartCard />
               <TelemetryTable />
             </>
           )}
+
+          {activeTab === "mssql" && <MssqlSecretCard />}
 
           {activeTab === "telemetry" && <TelemetryTable />}
 
