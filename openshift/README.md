@@ -196,21 +196,30 @@ Your app will be accessible at:
 
 ---
 
-## 🔐 Injecting MSSQL Server Secrets into OpenShift
+## 🔐 Managing Multiple MSSQL Secrets in OpenShift
 
-To test injecting MSSQL credentials from OpenShift Secrets into your Next.js application pods:
+To inject credentials for **2 distinct MSSQL database servers** (e.g., Primary Analytics DB & Secondary Audit DB) into your Next.js application deployment:
 
 ```powershell
-# 1. Create the OpenShift secret
-oc create secret generic mssql-secret `
-  --from-literal=MSSQL_HOST=mssql.production.svc.cluster.local `
+# 1. Create Secret 1 for Primary Database (Server 1)
+oc create secret generic mssql-primary-secret `
+  --from-literal=MSSQL_HOST=mssql-primary.production.svc.cluster.local `
   --from-literal=MSSQL_PORT=1433 `
   --from-literal=MSSQL_DATABASE=PrecisionAnalyticsDB `
   --from-literal=MSSQL_USER=sa_analytics_admin `
   --from-literal=MSSQL_PASSWORD=P@ssw0rd!Precision2026
 
-# 2. Inject secret environment variables into the Next.js deployment
-oc set env deployment/nextjs-test --from=secret/mssql-secret
+# 2. Create Secret 2 for Secondary Audit Database (Server 2)
+oc create secret generic mssql-secondary-secret `
+  --from-literal=MSSQL_DB2_HOST=mssql-audit.production.svc.cluster.local `
+  --from-literal=MSSQL_DB2_PORT=1433 `
+  --from-literal=MSSQL_DB2_DATABASE=AuditLogsDB `
+  --from-literal=MSSQL_DB2_USER=sa_audit_admin `
+  --from-literal=MSSQL_DB2_PASSWORD=P@ssw0rd!AuditLogs2026
+
+# 3. Inject BOTH secrets into the Next.js deployment
+oc set env deployment/nextjs-test --from=secret/mssql-primary-secret
+oc set env deployment/nextjs-test --from=secret/mssql-secondary-secret
 ```
 
 ---

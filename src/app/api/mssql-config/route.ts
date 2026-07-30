@@ -1,22 +1,33 @@
 import { NextResponse } from "next/server";
 
 export async function GET() {
-  const host = process.env.MSSQL_HOST || "mssql.production.svc.cluster.local (Default)";
-  const port = process.env.MSSQL_PORT || "1433";
-  const database = process.env.MSSQL_DATABASE || "PrecisionAnalyticsDB";
-  const user = process.env.MSSQL_USER || "sa_analytics_admin";
-  const rawPassword = process.env.MSSQL_PASSWORD || "P@ssw0rd!Precision2026";
+  const primary = {
+    id: "primary",
+    name: "Primary Analytics Database (Server 1)",
+    secretName: "mssql-primary-secret",
+    host: process.env.MSSQL_HOST || "mssql-primary.production.svc.cluster.local",
+    port: process.env.MSSQL_PORT || "1433",
+    database: process.env.MSSQL_DATABASE || "PrecisionAnalyticsDB",
+    user: process.env.MSSQL_USER || "sa_analytics_admin",
+    password: process.env.MSSQL_PASSWORD || "P@ssw0rd!Precision2026",
+    isConfigured: Boolean(process.env.MSSQL_HOST),
+  };
 
-  // Determine if credentials came from OpenShift Secret vs fallback
-  const isFromOpenShiftSecret = Boolean(process.env.MSSQL_HOST && process.env.MSSQL_PASSWORD);
+  const secondary = {
+    id: "secondary",
+    name: "Secondary Audit Database (Server 2)",
+    secretName: "mssql-secondary-secret",
+    host: process.env.MSSQL_DB2_HOST || "mssql-audit.production.svc.cluster.local",
+    port: process.env.MSSQL_DB2_PORT || "1433",
+    database: process.env.MSSQL_DB2_DATABASE || "AuditLogsDB",
+    user: process.env.MSSQL_DB2_USER || "sa_audit_admin",
+    password: process.env.MSSQL_DB2_PASSWORD || "P@ssw0rd!AuditLogs2026",
+    isConfigured: Boolean(process.env.MSSQL_DB2_HOST),
+  };
 
   return NextResponse.json({
-    host,
-    port,
-    database,
-    user,
-    password: rawPassword,
-    isFromOpenShiftSecret,
+    primary,
+    secondary,
     timestamp: new Date().toISOString(),
   });
 }
