@@ -46,7 +46,7 @@ export default function Home() {
                 Precision Analytics Control Center
               </h1>
               <p style={{ fontSize: "14px", color: "var(--text-secondary)", marginTop: "4px" }}>
-                Real-time performance telemetry, FastAPI worker metrics, and OpenShift Secret Inspector.
+                Real-time performance telemetry, Next.js worker metrics, and OpenShift Secret Inspector.
               </p>
             </div>
 
@@ -132,9 +132,9 @@ export default function Home() {
                 border: "1px solid var(--border-subtle)",
               }}
             >
-              <h2 style={{ fontSize: "20px", fontWeight: 700, marginBottom: "12px" }}>FastAPI Cluster Settings</h2>
+              <h2 style={{ fontSize: "20px", fontWeight: 700, marginBottom: "12px" }}>Next.js Cluster & Server Settings</h2>
               <p style={{ color: "var(--text-secondary)", fontSize: "14px" }}>
-                Manage CORS policy, Uvicorn concurrency thresholds, and telemetry log retention.
+                Manage CORS policy, Next.js route concurrency thresholds, and telemetry log retention.
               </p>
             </div>
           )}

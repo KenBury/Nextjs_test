@@ -40,7 +40,7 @@ export default function KpiGrid() {
       unit: "nodes",
       change: "100%",
       isPositive: true,
-      subtext: "Uvicorn worker pool",
+      subtext: "Next.js worker threads",
       color: "var(--primary-text)",
       bgColor: "var(--primary-container)",
     },

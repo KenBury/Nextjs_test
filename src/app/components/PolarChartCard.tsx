@@ -92,7 +92,7 @@ export default function PolarChartCard() {
           >
             <option value="Model-v4-Polar">Model-v4-Polar (Active)</option>
             <option value="Model-v3-Stitch">Model-v3-Stitch</option>
-            <option value="Model-v2-FastAPI">Model-v2-FastAPI</option>
+            <option value="Model-v2-NextJS">Model-v2-NextJS</option>
           </select>
 
           {/* Scale Buttons */}

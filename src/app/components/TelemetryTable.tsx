@@ -22,7 +22,7 @@ const INITIAL_LOGS: LogEntry[] = [
     status: 200,
     latency: 14.2,
     size: "1.2 KB",
-    worker: "uvicorn-worker-01",
+    worker: "nextjs-worker-01",
   },
   {
     id: "log-102",
@@ -32,7 +32,7 @@ const INITIAL_LOGS: LogEntry[] = [
     status: 200,
     latency: 8.5,
     size: "4.8 KB",
-    worker: "uvicorn-worker-03",
+    worker: "nextjs-worker-03",
   },
   {
     id: "log-103",
@@ -42,7 +42,7 @@ const INITIAL_LOGS: LogEntry[] = [
     status: 200,
     latency: 11.1,
     size: "820 B",
-    worker: "uvicorn-worker-02",
+    worker: "nextjs-worker-02",
   },
   {
     id: "log-104",
@@ -52,7 +52,7 @@ const INITIAL_LOGS: LogEntry[] = [
     status: 201,
     latency: 19.4,
     size: "2.1 KB",
-    worker: "uvicorn-worker-04",
+    worker: "nextjs-worker-04",
   },
   {
     id: "log-105",
@@ -62,7 +62,7 @@ const INITIAL_LOGS: LogEntry[] = [
     status: 200,
     latency: 3.2,
     size: "140 B",
-    worker: "uvicorn-worker-01",
+    worker: "nextjs-worker-01",
   },
   {
     id: "log-106",
@@ -72,7 +72,7 @@ const INITIAL_LOGS: LogEntry[] = [
     status: 422,
     latency: 34.0,
     size: "512 B",
-    worker: "uvicorn-worker-02",
+    worker: "nextjs-worker-02",
   },
 ];
 
@@ -106,7 +106,7 @@ export default function TelemetryTable() {
         status: randomEp.status,
         latency: Number((8 + Math.random() * 22).toFixed(1)),
         size: randomEp.size,
-        worker: `uvicorn-worker-${workerNum}`,
+        worker: `nextjs-worker-${workerNum}`,
       };
 
       setLogs((prev) => [newEntry, ...prev.slice(0, 19)]);
@@ -163,12 +163,12 @@ export default function TelemetryTable() {
                 letterSpacing: "-0.01em",
               }}
             >
-              FastAPI Live Endpoint Stream
+              Next.js Live Route & Endpoint Stream
             </h2>
             {isStreaming && <span className="live-pulse"></span>}
           </div>
           <p style={{ fontSize: "13px", color: "var(--text-secondary)", marginTop: "2px" }}>
-            Real-time request stream & Uvicorn worker log inspector
+            Real-time request stream & Next.js worker log inspector
           </p>
         </div>
 

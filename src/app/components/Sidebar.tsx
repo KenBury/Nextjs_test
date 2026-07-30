@@ -79,7 +79,7 @@ export default function Sidebar({ activeTab, setActiveTab }: SidebarProps) {
               fontWeight: 500,
             }}
           >
-            FastAPI Telemetry Hub
+            Next.js Telemetry Hub
           </p>
         </div>
       </div>
@@ -106,7 +106,7 @@ export default function Sidebar({ activeTab, setActiveTab }: SidebarProps) {
               color: "var(--text-primary)",
             }}
           >
-            FastAPI Connected
+            Next.js Engine Connected
           </div>
           <div
             style={{

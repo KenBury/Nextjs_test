@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Precision Analytics Dashboard | FastAPI Telemetry",
-  description: "High-density data visualization and real-time telemetry dashboard for FastAPI endpoints and polar models.",
+  title: "Precision Analytics Dashboard | Next.js Telemetry",
+  description: "High-density data visualization and real-time telemetry dashboard for Next.js API routes and polar models.",
 };
 
 export default function RootLayout({
