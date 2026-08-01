@@ -1,0 +1,3 @@
+[submodule ".agent"]
+	path = .agent
+	url = C:/Users/kenbu/Documents/Code/agent-governance
